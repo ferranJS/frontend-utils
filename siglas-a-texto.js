@@ -15,12 +15,12 @@ class AbrToTextTitle extends React.Component {
       words.forEach(word =>{
          let letter = this.props.abrev.charAt(i)
          if(letter == word.charAt(0)) { // debería ignorar las mayúsculas
-            labels.push(<label key={letter+i} className={"letra"}>{letter}</label>)
-            labels.push(<label key={word} className={"texto"}>{word.substring(1)} </label>)
+            labels.push(<label key={letter+i} className={"letra"}> {letter}</label>)
+            labels.push(<label key={word} className={"texto"}>{word.substring(1)}</label>)
             i++
             return
          }
-         labels.push(<label key={word} className={"texto"}>{word} </label>)
+         labels.push(<label key={word} className={"texto"}> {word}</label>)
       })
 
       return (
@@ -31,4 +31,4 @@ class AbrToTextTitle extends React.Component {
    }
 }
 
-ReactDOM.render(<AbrToTextTitle abrev="AHMHNBMS" text="Ano Hi Mita Hana no Namae o Bokutachi wa Mada Shiranai" />, domContainer)
+ReactDOM.render(<AbrToTextTitle abrev="ESAT" text="Escuela Superior de Arte y Tecnología" />, domContainer)

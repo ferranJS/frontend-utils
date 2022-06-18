@@ -1,0 +1,84 @@
+let canvas = document.getElementById('main_canvas')
+let context = canvas.getContext('2d')
+
+let x, y = null
+let bx = 200
+let by = 100
+
+// on canvas movement activator
+show = (e) => {
+   // context.clearRect(0, 0, canvas.width, canvas.height)
+   // draw(e)
+   getPosition(e)
+
+}
+
+draw = (e) => {
+   let [x0, y0] = [x, y]
+   getPosition(e)
+   context.beginPath()
+   context.moveTo(x0, y0)
+   context.lineTo(x, y)
+   context.stroke()
+}
+
+getPosition = (e) => {
+   var rect = canvas.getBoundingClientRect()
+   if (e.type == 'touchstart' || e.type == 'touchmove' || e.type == 'touchend' || e.type == 'touchcancel') {
+      var evt = (typeof e.originalEvent === 'undefined') ? e : e.originalEvent
+      var touch = evt.touches[0] || evt.changedTouches[0]
+
+      x = touch.pageX - rect.left
+      y = touch.pageY - rect.top
+   } else if (e.type == 'mousedown' || e.type == 'mouseup' || e.type == 'mousemove' || e.type == 'mouseover' || e.type == 'mouseout' || e.type == 'mouseenter' || e.type == 'mouseleave') {
+      x = e.clientX - rect.left
+      y = e.clientY - rect.top
+   }
+}
+
+stopAction = (e) => {
+   x = y = undefined
+}
+
+let cr = 0
+startAction = (e) => {
+   cr+=30
+}
+
+// radius of a circle 
+radius = (x1, y1, x2, y2) => {
+   return Math.hypot(x2 - x1, y2 - y1) / 2
+}
+
+// setting up canvas stuff
+canvas.ontouchstart = canvas.onmousedown = startAction
+// canvas.ontouchend = canvas.onmouseup = 
+canvas.onmouseleave = canvas.ontouchcancel = stopAction
+canvas.ontouchmove = canvas.onmousemove = show
+
+canvas.setAttribute('width', 400)
+canvas.setAttribute('height', 200)
+
+context.lineWidth = 5
+context.strokeStyle = "white"
+
+context.lineCap = 'round'
+
+// crazy colors
+setInterval(_=>context.strokeStyle = "#"+Math.floor(Math.random()*16777215).toString(16), 10)
+// clear canvas 
+setInterval(_=>context.clearRect(0, 0, canvas.width, canvas.height), 80)
+
+
+// magic circle
+setInterval(_=>{
+   context.beginPath()
+   // circle in pointer
+   context.arc( x, y, radius(bx, by, x+cr, y+cr), 0, 2 * Math.PI )
+   // circle in the middle
+   // context.arc( bx, by, radius(bx, by, bx, by), 0, 2 * Math.PI )
+   context.stroke()
+   if (cr>0) cr-=0.2
+})
+
+

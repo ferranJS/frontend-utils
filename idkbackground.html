@@ -1,0 +1,48 @@
+<head>
+   <style>
+      @keyframes gradient {
+         0% {
+            background-position: 0 50%
+         }
+
+         50% {
+            background-position: 100% 50%
+         }
+
+         to {
+            background-position: 0 50%
+         }
+      }
+
+      html {
+         background: linear-gradient(-45deg, #ff0, #ffa55b, #ff615b, #e73c7e, #cb3ce7, #46b7e4, #23d5ab, #c4ffde);
+         background-size: 200% 200%;
+         background-position: center;
+         -webkit-animation: gradient 5s ease infinite;
+         animation: gradient 5s ease infinite;
+
+      }
+
+      body {
+         margin: 0;
+         width: 100vw;
+         height: 100vh;
+         background:
+            radial-gradient(circle, 
+               transparent 50%,
+               rgb(49, 43, 43) 50%);
+         background-size: 100vh 100vh;
+         background-position: center;
+         transition: 3s;
+      }
+
+      body:hover {
+         background-position: center;
+         background-size: 2vh 2vh;
+         transition: 3s;
+      }
+   </style>
+</head>
+
+<body>
+</body>

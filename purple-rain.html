@@ -1,0 +1,217 @@
+<html>
+
+<head>
+   <style>
+      /* h1 font */
+      @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&family=Nunito+Sans:wght@200&display=swap');
+
+      :root {
+         --main-color: #584099;
+         --secondary-color: #d4d6f8;
+      }
+
+      html {
+         height: fit-content
+      }
+
+      body {
+         position: relative;
+         margin: 0;
+         height: fit-content;
+         width: 100vw;
+         background-color: #05060a;
+      }
+
+      /* Works on Firefox */
+      * {
+         overflow-x: hidden;
+         scrollbar-width: thin;
+         scrollbar-color: var(--main-color) var(--secondary-color);
+      }
+
+      /* Works on Chrome, Edge, and Safari */
+      *::-webkit-scrollbar {
+         width: 12px;
+      }
+
+      *::-webkit-scrollbar-track {
+         background: var(--secondary-color);
+      }
+
+      *::-webkit-scrollbar-thumb {
+         background-color: var(--main-color);
+         border-radius: 20px;
+         border: 3px solid var(--secondary-color);
+      }
+
+      *::selection {
+         background: var(--secondary-color);
+         color: var(--main-color);
+      }
+
+      #first-section {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         height: 100vh;
+      }
+
+      h1 {
+         padding: 1.5rem;
+         margin: auto;
+         font-size: 3.3rem;
+         font-family: 'Montserrat Alternates';
+         color: var(--secondary-color);
+      }
+
+      #bgCanvas {
+         top: 0;
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         z-index: -5;
+         object-fit: contain;
+         pointer-events: none;
+      }
+   </style>
+</head>
+
+<body>
+   <div id="first-section">
+      <h1> Purple Rain! </h1>
+   </div>
+
+   <canvas id="bgCanvas"></canvas>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <p style="height:300px"></p>
+   <script>
+      let bgCanvas = document.createElement('canvas');
+      bgCanvas = document.getElementById('bgCanvas');
+      let bgCtx = bgCanvas.getContext('2d');
+      let h1Element = document.getElementsByTagName('h1')[0];
+
+      let originalWidth = bgCanvas.clientWidth;
+      let originalHeight = bgCanvas.clientHeight;
+
+      let passThroughThreshold = 1.9;
+
+      const dpr = window.devicePixelRatio || 1;
+
+      window.addEventListener("resize", _ => {
+         bgCanvas.width = bgCanvas.clientWidth;
+         bgCanvas.height = bgCanvas.clientHeight;
+         bgCtx.fillStyle = "#d4d6f8"; //"#8d92f666"
+         bgCtx.strokeStyle = "#584099";
+
+         // bgCtx.beginPath();
+         // bgCtx.arc(500, 500, 500, 0, 2 * Math.PI);
+         // bgCtx.stroke();
+      });
+
+      bgCanvas.width = bgCanvas.clientWidth;
+      bgCanvas.height = bgCanvas.clientHeight;
+
+      bgCtx.fillStyle = "#d4d6f8";
+      bgCtx.strokeStyle = "#584099";
+      class Drop {
+         constructor(x, y, height, width) {
+            this.x = x;
+            this.y = y;
+            this.height = height;
+            this.width = width;
+         }
+      }
+      let drops = [];
+      // for loop fallspeed maximum 20, minimum 4, size maximum 5, minimum 2, x maximum windowwidth, minimum 0, y = -20
+      for (let i = 0; i < 1010; i++) {
+         let x = Math.random() * (bgCanvas.clientWidth + 30) - 15;
+         let y = Math.random() * -4000;
+         let height = Math.random() * 18 + 10;
+         let width = height / 6;
+         drops.push(new Drop(x, y, height, width));
+      }
+
+      let drawDrops = _ => {
+         drops.forEach(drop => {
+
+            if (drop.y > bgCanvas.clientHeight || drop.width < 1 || drop.height < 1) {
+               drop.y = Math.random() * -2000;
+               drop.x = Math.random() * (bgCanvas.clientWidth + 30) - 15;
+               drop.height = Math.random() * 20 + 10;
+               drop.width = drop.height / 6;
+               return;
+            }
+            // fall as such
+            drop.y += drop.width;
+            // dont draw if above screen
+            if (drop.y < - 50) {
+               return;
+            }
+            // colision with h1
+            if (drop.x > h1Element.offsetLeft + 20 && drop.x < h1Element.offsetLeft + h1Element.offsetWidth - 20 && drop.width > passThroughThreshold) {
+               // drop desapears
+               if (drop.y > h1Element.offsetTop - drop.height + 90)
+                  return;
+               // drop shrinks
+               if (drop.y > h1Element.offsetTop - drop.height + 43) {
+                  drop.height -= drop.width;
+                  splash(drop.width, drop.height, drop.x, drop.y);
+               }
+            }
+            bgCtx.beginPath();
+            bgCtx.rect(drop.x, drop.y, drop.width, drop.height);
+            bgCtx.fill();
+            bgCtx.stroke();
+         });
+      };
+
+      let splash = (w, h, x, y) => {
+         bgCtx.lineWidth = w;
+         bgCtx.strokeStyle = "#d4d6f8";
+         bgCtx.beginPath();
+         bgCtx.moveTo(x, y + w * 6);
+         bgCtx.lineTo(x + w * 3, y + w * 3);
+         bgCtx.fill();
+         bgCtx.stroke();
+         bgCtx.lineWidth = 1;
+         bgCtx.strokeStyle = "#584099";
+      };
+      let a = false;
+      setTimeout(_ => {
+         a = true;
+      }, 2000);
+      setTimeout(_ => {
+         a = false;
+      }, 2219);
+
+      let draw = _ => {
+         bgCtx.beginPath();
+         if (a) {
+            bgCtx.rect(h1Element.offsetLeft + 100, h1Element.offsetTop + 200, h1Element.offsetHeight, h1Element.offsetWidth);
+            console.log("a: ", a);
+         }
+         bgCtx.stroke();
+         bgCtx.clearRect(0, 0, bgCanvas.clientWidth, bgCanvas.clientHeight);
+
+         drawDrops();
+         setTimeout(_ => {
+            draw();
+         }, 20);
+      };
+      draw()
+
+   </script>
+</body>
+
+</html>

@@ -8,35 +8,13 @@
    <link
       href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Passions+Conflict&family=Shippori+Antique&family=Yeseva+One&display=swap"
       rel="stylesheet">
+      <!--//TODO Add hover effects! -->
+   <link rel="stylesheet" href="global.css" />
    <style>
-      * {
-         margin: 0;
-         padding: 0;
-         box-sizing: border-box;
-      }
-
       :root {
          --logo-size: 4em;
          color: azure;
          font-family: 'Poppins', sans-serif;
-      }
-
-      html,
-      body {
-         background-color: #212029;
-         height: 100%;
-         width: 100%;
-      }
-
-      body {
-         display: flex;
-         align-items: center;
-         justify-content: center;
-      }
-
-      .container {
-         display: flex;
-         flex-direction: row;
       }
 
       .elDiluvi {
@@ -54,12 +32,11 @@
          font-family: 'Shippori Antique', sans-serif;
          text-align: center;
          font-weight: bold;
+         text-decoration: none;
       }
-
       .smaller {
          font-size: 0.69em;
       }
-
       .elDiluviNom {
          position: absolute;
          top: 0.5em;
@@ -83,14 +60,15 @@
          display: flex;
          justify-content: center;
          align-items: center;
+         text-decoration: unset;
       }
-
       .oquesNom {
          font-family: 'Monsieur La Doulaise';
          font-size: 0.8em;
          color: rgba(255, 255, 255, 0.806);
+         /* z-index: 2;
+         opacity:0.9 */
       }
-
       .fansDelSol {
          font-size: 1.1em;
          font-family: 'Yeseva One', cursive;
@@ -105,8 +83,9 @@
 <!--! This is just a simple template as reference for new .htmls in the project -->
 
 <body>
+   <a class="back button" href="index.html"><b>⬅</b></a>
    <div class="container">
-      <div class="elDiluvi">
+      <a class="elDiluvi" href="https://www.youtube.com/watch?v=bWWh0QuKtoE&list=OLAK5uy_kk5D92kCwftGSRlTLWRpBLzp6Oqql-q2E" target="_blank">
          <div class="elDiluviNom">elDiluvi</div>
          <div class="smaller">
             <div class="smaller">
@@ -129,14 +108,15 @@
             </div>
             JUNTEU-VOS
          </div>
-      </div>
-      <div class="oquesGrasses">
+      </a>
+      
+      <a class="oquesGrasses" href="https://www.youtube.com/watch?v=LnJmhbDUVnE&list=OLAK5uy_kvIuB2RzN_jydQQfcue5KKWED9Unw4M0k" target="_blank">
          <div class="fansDelSol">
             Fans del sol
          </div>
          <div class="oquesNom">
             Oques Grasses
          </div>
-      </div>
+      </a>
    </div>
 </body>

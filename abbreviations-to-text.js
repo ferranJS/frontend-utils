@@ -24,8 +24,10 @@ class AbrToTextTitle extends React.Component {
       })
 
       return (
-         <div className={"container"}>
-            {labels}
+         <div className="container">
+            <div className="flexible-container">
+               {labels}
+            </div>
          </div>
       )
    }
